@@ -4,9 +4,9 @@ namespace App\Transformers;
 
 use App\Conversation;
 
-class ConversationTransformer extends League\Fractal\TransformerAbstract {
+class ConversationTransformer extends \League\Fractal\TransformerAbstract {
 
-    protected $availableIncludes = ['replice', 'user', 'users', 'parent'];
+    protected $availableIncludes = ['replies', 'user', 'users', 'parent'];
 
     /**
      * @param Conversation $conversation
@@ -23,11 +23,11 @@ class ConversationTransformer extends League\Fractal\TransformerAbstract {
         ];
     }
 
-    public function includesReplies(Conversation $conversation){
+    public function includeReplies(Conversation $conversation){
         return $this->collection($conversation->replies, new ConversationTransformer);
     }
 
-    public function includesParent(Conversation $conversation){
+    public function includeParent(Conversation $conversation){
         return $this->item($conversation->parent, new ConversationTransformer);
     }
 

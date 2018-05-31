@@ -4,9 +4,7 @@ namespace App\Transformers;
 
 use App\User;
 
-class UserTransformer extends League\Fractal\TransformerAbstract {
-
-    protected $availableIncludes = ['replice', 'user', 'users', 'parent'];
+class UserTransformer extends \League\Fractal\TransformerAbstract {
 
     /**
      * @param User $user

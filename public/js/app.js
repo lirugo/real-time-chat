@@ -25810,7 +25810,7 @@ __webpack_require__(16);
 window.Vue = __webpack_require__(11);
 
 
-Vue.use(vuex);
+Vue.use(__WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -48355,7 +48355,7 @@ if (false) {
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
 
-/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].store({
+/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     modules: {
         conversations: __WEBPACK_IMPORTED_MODULE_2__modules_conversations__["a" /* default */]
     }

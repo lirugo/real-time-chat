@@ -8,9 +8,9 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import Vuex from 'vuex';
 
-import Vuex from 'vuex'
-Vue.use(vuex);
+Vue.use(Vuex);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
