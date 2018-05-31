@@ -19,6 +19,9 @@ Vue.use(vuex);
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
+import store from './store/index'
+
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    store
 });
