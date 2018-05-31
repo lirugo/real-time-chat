@@ -21,5 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::group(['prefix' => 'webapi', 'namespace' => 'Api'], function() {
-    Route::get('/conversation', 'ConversationController@index');
+    Route::get('/conversations', 'ConversationController@index');
 });
+
+Route::get('/conversations', 'ConversationController@index');
