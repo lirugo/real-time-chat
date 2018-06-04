@@ -33,4 +33,10 @@ class Conversation extends Model
         return $this->parent_id !== null;
     }
 
+    public function touchLastReply()
+    {
+        $this->last_reply = \Carbon\Carbon::now();
+        $this->save();
+    }
+
 }

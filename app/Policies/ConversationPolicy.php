@@ -27,4 +27,14 @@ class ConversationPolicy
     public function affect(User $user, Conversation $conversation){
         return $user->isInConversation($conversation);
     }
+
+    /**
+     * @param User $user
+     * @param Conversation $conversation
+     * @return bool
+     */
+    public function reply(User $user, Conversation $conversation)
+    {
+        return $this->affect($user, $conversation);
+    }
 }
