@@ -5,7 +5,7 @@
             <div class="loader" v-if="loading"></div>
             <div class="media" v-for="conversation in conversations" v-else-if="conversations.length">
                 <div class="media-body">
-                    <a href="#">{{ trunc(conversation.body, 50) }}</a>
+                    <a href="#" @click.prevent="getConversation(conversation.id)">{{ trunc(conversation.body, 50) }}</a>
                     <p class="text-muted">
                         You and {{ conversation.participant_count }} {{ pluralize('other', conversation.participant_count) }}
                     </p>
@@ -14,6 +14,7 @@
                             <img :src="user.avatar" :title="user.name" :alt="user.name + 'avatar'" v-for="user in conversation.users.data">
                         </li>
                         <small>Last reply {{ conversation.last_reply_human }}</small>
+                        <hr>
                     </ul>
                 </div>
             </div>
@@ -34,7 +35,8 @@
         }),
         methods: {
             ...mapActions([
-                'getConversations'
+                'getConversations',
+                'getConversation',
             ]),
             trunc: trunc,
             pluralize: pluralize
