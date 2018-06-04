@@ -49127,12 +49127,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])({
-        conversation: 'currentConversation'
+        conversation: 'currentConversation',
+        loading: 'loadingConversation'
     })
 });
 
@@ -49144,31 +49149,79 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.conversation
-    ? _c(
-        "div",
-        [
-          _vm.conversation.users.data.length
-            ? _c(
-                "ul",
-                { staticClass: "list-inline" },
+  return _vm.loading
+    ? _c("div", [_c("div", { staticClass: "loader" })])
+    : _vm.conversation
+      ? _c(
+          "div",
+          [
+            _vm.conversation.users.data.length
+              ? _c(
+                  "ul",
+                  { staticClass: "list-inline" },
+                  [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _vm._l(_vm.conversation.users.data, function(user) {
+                      return _c("li", { staticClass: "list-inline-item" }, [
+                        _vm._v(_vm._s(user.name))
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("hr")
+                  ],
+                  2
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm._l(_vm.conversation.replies.data, function(reply) {
+              return _c(
+                "div",
+                {
+                  staticClass: "media",
+                  staticStyle: { "padding-top": "10px" }
+                },
                 [
-                  _vm._m(0),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "media-left",
+                      staticStyle: { "padding-right": "10px" }
+                    },
+                    [
+                      _c("img", {
+                        attrs: {
+                          src: reply.user.data.avatar,
+                          alt: reply.user.data.name
+                        }
+                      })
+                    ]
+                  ),
                   _vm._v(" "),
-                  _vm._l(_vm.conversation.users.data, function(user) {
-                    return _c("li", { staticClass: "list-inline-item" }, [
-                      _vm._v(_vm._s(user.name))
+                  _c("div", { staticClass: "media-body" }, [
+                    _c("p", [
+                      _vm._v(
+                        _vm._s(reply.user.data.name) +
+                          " • " +
+                          _vm._s(reply.created_at_human)
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card card-default" }, [
+                      _c("div", { staticClass: "card-body" }, [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(reply.body) +
+                            "\n                "
+                        )
+                      ])
                     ])
-                  }),
-                  _vm._v(" "),
-                  _c("hr")
-                ],
-                2
+                  ])
+                ]
               )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm._l(_vm.conversation.replies.data, function(reply) {
-            return _c(
+            }),
+            _vm._v(" "),
+            _c(
               "div",
               { staticClass: "media", staticStyle: { "padding-top": "10px" } },
               [
@@ -49181,8 +49234,8 @@ var render = function() {
                   [
                     _c("img", {
                       attrs: {
-                        src: reply.user.data.avatar,
-                        alt: reply.user.data.name
+                        src: _vm.conversation.user.data.avatar,
+                        alt: _vm.conversation.user.data.name
                       }
                     })
                   ]
@@ -49191,9 +49244,9 @@ var render = function() {
                 _c("div", { staticClass: "media-body" }, [
                   _c("p", [
                     _vm._v(
-                      _vm._s(reply.user.data.name) +
+                      _vm._s(_vm.conversation.user.data.name) +
                         " • " +
-                        _vm._s(reply.created_at_human)
+                        _vm._s(_vm.conversation.created_at_human)
                     )
                   ]),
                   _vm._v(" "),
@@ -49201,7 +49254,7 @@ var render = function() {
                     _c("div", { staticClass: "card-body" }, [
                       _vm._v(
                         "\n                    " +
-                          _vm._s(reply.body) +
+                          _vm._s(_vm.conversation.body) +
                           "\n                "
                       )
                     ])
@@ -49209,53 +49262,10 @@ var render = function() {
                 ])
               ]
             )
-          }),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "media", staticStyle: { "padding-top": "10px" } },
-            [
-              _c(
-                "div",
-                {
-                  staticClass: "media-left",
-                  staticStyle: { "padding-right": "10px" }
-                },
-                [
-                  _c("img", {
-                    attrs: {
-                      src: _vm.conversation.user.data.avatar,
-                      alt: _vm.conversation.user.data.name
-                    }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "media-body" }, [
-                _c("p", [
-                  _vm._v(
-                    _vm._s(_vm.conversation.user.data.name) +
-                      " • " +
-                      _vm._s(_vm.conversation.created_at_human)
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "card card-default" }, [
-                  _c("div", { staticClass: "card-body" }, [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(_vm.conversation.body) +
-                        "\n                "
-                    )
-                  ])
-                ])
-              ])
-            ]
-          )
-        ],
-        2
-      )
-    : _vm._e()
+          ],
+          2
+        )
+      : _c("div", [_vm._v("Select a conversation.")])
 }
 var staticRenderFns = [
   function() {
@@ -49375,6 +49385,9 @@ var state = {
 var getters = {
     currentConversation: function currentConversation(state) {
         return state.conversation;
+    },
+    loadingConversation: function loadingConversation(state) {
+        return state.loadingConversation;
     }
 };
 
@@ -49383,8 +49396,10 @@ var actions = {
         var dispatch = _ref.dispatch,
             commit = _ref.commit;
 
+        commit('setConversationLoading', true);
         __WEBPACK_IMPORTED_MODULE_0__api_all__["a" /* default */].getConversation(id).then(function (response) {
             commit('setConversation', response.data.data);
+            commit('setConversationLoading', false);
         });
     }
 };
@@ -49392,6 +49407,9 @@ var actions = {
 var mutations = {
     setConversation: function setConversation(state, conversation) {
         state.conversation = conversation;
+    },
+    setConversationLoading: function setConversationLoading(state, status) {
+        state.loadingConversation = status;
     }
 };
 

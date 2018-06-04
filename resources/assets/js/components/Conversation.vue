@@ -1,5 +1,8 @@
 <template>
-    <div v-if="conversation">
+    <div v-if="loading">
+        <div class="loader"></div>
+    </div>
+    <div v-else-if="conversation">
         <ul class="list-inline" v-if="conversation.users.data.length">
             <li class="list-inline-item"><strong>In conversation:</strong></li>
             <li class="list-inline-item" v-for="user in conversation.users.data">{{ user.name }}</li>
@@ -34,6 +37,7 @@
             </div>
         </div>
     </div>
+    <div v-else>Select a conversation.</div>
 </template>
 
 <script>
@@ -42,6 +46,7 @@
     export default {
         computed: mapGetters({
             conversation: 'currentConversation',
+            loading: 'loadingConversation'
         }),
     }
 </script>
