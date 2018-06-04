@@ -6,9 +6,12 @@
         <ul class="list-inline" v-if="conversation.users.data.length">
             <li class="list-inline-item"><strong>In conversation:</strong></li>
             <li class="list-inline-item" v-for="user in conversation.users.data">{{ user.name }}</li>
-            <hr>
         </ul>
+        <hr>
 
+        <conversation-reply-form></conversation-reply-form>
+
+        <hr>
         <div class="media" v-for="reply in conversation.replies.data" style="padding-top: 10px;">
             <div class="media-left" style="padding-right: 10px;">
                 <img v-bind:src="reply.user.data.avatar" v-bind:alt="reply.user.data.name"/>

@@ -23,6 +23,11 @@ const actions = {
 
             window.history.pushState(null, null, '/conversations/' + id)
         })
+    },
+    createConversationReply({dispatch, commit}, {id, body}){
+        return api.storeConversationReply(id, {
+            body:body
+        })
     }
 };
 

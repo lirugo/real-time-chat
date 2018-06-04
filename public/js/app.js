@@ -25901,6 +25901,17 @@ module.exports = Vue;
                 resolve(response);
             });
         });
+    },
+    storeConversationReply: function storeConversationReply(id, _ref) {
+        var body = _ref.body;
+
+        return new Promise(function (resolve, reject) {
+            axios.post('/webapi/conversations/' + id + '/reply', {
+                body: body
+            }).then(function (response) {
+                resolve(response);
+            });
+        });
     }
 });
 
@@ -25942,6 +25953,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */]);
 Vue.component('conversations-dashboard', __webpack_require__(42));
 Vue.component('conversations', __webpack_require__(45));
 Vue.component('conversation', __webpack_require__(50));
+Vue.component('conversation-reply-form', __webpack_require__(61));
 
 
 
@@ -49146,6 +49158,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
 
 
 
@@ -49188,13 +49203,17 @@ var render = function() {
                       return _c("li", { staticClass: "list-inline-item" }, [
                         _vm._v(_vm._s(user.name))
                       ])
-                    }),
-                    _vm._v(" "),
-                    _c("hr")
+                    })
                   ],
                   2
                 )
               : _vm._e(),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c("conversation-reply-form"),
+            _vm._v(" "),
+            _c("hr"),
             _vm._v(" "),
             _vm._l(_vm.conversation.replies.data, function(reply) {
               return _c(
@@ -49425,6 +49444,16 @@ var actions = {
 
             window.history.pushState(null, null, '/conversations/' + id);
         });
+    },
+    createConversationReply: function createConversationReply(_ref2, _ref3) {
+        var dispatch = _ref2.dispatch,
+            commit = _ref2.commit;
+        var id = _ref3.id,
+            body = _ref3.body;
+
+        return __WEBPACK_IMPORTED_MODULE_0__api_all__["a" /* default */].storeConversationReply(id, {
+            body: body
+        });
     }
 };
 
@@ -49449,6 +49478,175 @@ var mutations = {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(62)
+/* template */
+var __vue_template__ = __webpack_require__(63)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\forms\\ConversationReplyForm.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2deefaf7", Component.options)
+  } else {
+    hotAPI.reload("data-v-2deefaf7", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 62 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            body: null
+        };
+    },
+
+    computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])({
+        conversation: 'currentConversation'
+    }),
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['createConversationReply']), {
+        reply: function reply() {
+            var _this = this;
+
+            this.createConversationReply({
+                id: this.conversation.id,
+                body: this.body
+            }).then(function () {
+                _this.body = null;
+            });
+        }
+    })
+});
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "form",
+    {
+      attrs: { action: "#" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.reply($event)
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "form-group" }, [
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.body,
+              expression: "body"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { cols: "30", rows: "4", placeholder: "Reply" },
+          domProps: { value: _vm.body },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.body = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-sm btn-default", attrs: { type: "submit" } },
+        [_vm._v("Reply")]
+      )
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2deefaf7", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
