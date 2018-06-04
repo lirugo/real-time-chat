@@ -10,10 +10,12 @@
                         You and {{ conversation.participant_count }} {{ pluralize('other', conversation.participant_count) }}
                     </p>
                     <ul class="list-inline">
-                        <li>
+                        <li class="list-inline-item">
                             <img :src="user.avatar" :title="user.name" :alt="user.name + 'avatar'" v-for="user in conversation.users.data">
                         </li>
-                        <small>Last reply {{ conversation.last_reply_human }}</small>
+                        <li class="list-inline-item">
+                            <small>Last reply {{ conversation.last_reply_human }}</small>
+                        </li>
                         <hr>
                     </ul>
                 </div>

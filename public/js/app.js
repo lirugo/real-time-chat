@@ -48304,8 +48304,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
+    props: {
+        'id': {
+            default: null
+        }
     }
 });
 
@@ -48321,7 +48323,12 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-5" }, [_c("conversations")], 1),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-7" }, [_c("conversation")], 1)
+      _c(
+        "div",
+        { staticClass: "col-md-7" },
+        [_c("conversation", { attrs: { id: _vm.id } })],
+        1
+      )
     ])
   ])
 }
@@ -48395,6 +48402,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(2);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
 //
 //
 //
@@ -48997,6 +49006,7 @@ var render = function() {
                     _c("ul", { staticClass: "list-inline" }, [
                       _c(
                         "li",
+                        { staticClass: "list-inline-item" },
                         _vm._l(conversation.users.data, function(user) {
                           return _c("img", {
                             attrs: {
@@ -49008,10 +49018,13 @@ var render = function() {
                         })
                       ),
                       _vm._v(" "),
-                      _c("small", [
-                        _vm._v(
-                          "Last reply " + _vm._s(conversation.last_reply_human)
-                        )
+                      _c("li", { staticClass: "list-inline-item" }, [
+                        _c("small", [
+                          _vm._v(
+                            "Last reply " +
+                              _vm._s(conversation.last_reply_human)
+                          )
+                        ])
                       ]),
                       _vm._v(" "),
                       _c("hr")
@@ -49089,6 +49102,8 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -49135,10 +49150,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['id'],
     computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])({
         conversation: 'currentConversation',
         loading: 'loadingConversation'
-    })
+    }),
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['getConversation'])),
+    mounted: function mounted() {
+        if (this.id !== null) {
+            this.getConversation(this.id);
+        }
+    }
 });
 
 /***/ }),
@@ -49400,6 +49422,8 @@ var actions = {
         __WEBPACK_IMPORTED_MODULE_0__api_all__["a" /* default */].getConversation(id).then(function (response) {
             commit('setConversation', response.data.data);
             commit('setConversationLoading', false);
+
+            window.history.pushState(null, null, '/conversations/' + id);
         });
     }
 };

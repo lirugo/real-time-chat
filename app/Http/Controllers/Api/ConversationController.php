@@ -30,7 +30,7 @@ class ConversationController extends Controller
         $this->authorize('show', $conversation);
 
         if($conversation->isReply()){
-            abort(404);
+            abort(403);
         }
 
         return fractal()

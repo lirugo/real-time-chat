@@ -44,9 +44,22 @@
     import { mapActions, mapGetters } from 'vuex'
 
     export default {
+        props: [
+            'id'
+        ],
         computed: mapGetters({
             conversation: 'currentConversation',
             loading: 'loadingConversation'
         }),
+        methods: {
+            ...mapActions([
+                'getConversation'
+            ])
+        },
+        mounted () {
+            if(this.id !== null){
+                this.getConversation(this.id)
+            }
+        }
     }
 </script>
