@@ -28,4 +28,9 @@ class Conversation extends Model
     public function replies(){
         return $this->hasMany(Conversation::class, 'parent_id')->orderBy('created_at', 'desc');
     }
+
+    public function isReply(){
+        return $this->parent_id !== null;
+    }
+
 }

@@ -35,4 +35,9 @@ class User extends Authenticatable
     {
         return 'https://www.gravatar.com/avatar/' . md5($this->email) . '?s=' . $size . '&d=mm';
     }
+
+    public function isInConversation(Conversation $conversation)
+    {
+        return $this->conversations->contains($conversation);
+    }
 }
