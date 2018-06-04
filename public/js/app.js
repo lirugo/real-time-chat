@@ -49395,6 +49395,12 @@ var mutations = {
     },
     setConversationsLoading: function setConversationsLoading(state, status) {
         state.loadingConversations = status;
+    },
+    prependToConversation: function prependToConversation(state, conversation) {
+        state.conversations = state.conversations.filter(function (c) {
+            return c.id !== conversation.id;
+        });
+        state.conversations.unshift(conversation);
     }
 };
 
@@ -49453,6 +49459,9 @@ var actions = {
 
         return __WEBPACK_IMPORTED_MODULE_0__api_all__["a" /* default */].storeConversationReply(id, {
             body: body
+        }).then(function (response) {
+            commit('appendToConversation', response.data.data);
+            commit('prependToConversation', response.data.data.parent.data);
         });
     }
 };
@@ -49463,6 +49472,11 @@ var mutations = {
     },
     setConversationLoading: function setConversationLoading(state, status) {
         state.loadingConversation = status;
+    },
+
+    //Updating UI
+    appendToConversation: function appendToConversation(state, reply) {
+        state.conversation.replies.data.unshift(reply);
     }
 };
 
@@ -49631,11 +49645,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "form-group" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-sm btn-default", attrs: { type: "submit" } },
-        [_vm._v("Reply")]
-      )
+      _c("button", { staticClass: "btn btn-sm", attrs: { type: "submit" } }, [
+        _vm._v("Reply")
+      ])
     ])
   }
 ]

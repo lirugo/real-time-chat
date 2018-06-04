@@ -4,7 +4,7 @@
             <textarea cols="30" rows="4" class="form-control" placeholder="Reply" v-model="body"></textarea>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-sm btn-default">Reply</button>
+            <button type="submit" class="btn btn-sm">Reply</button>
         </div>
     </form>
 </template>
