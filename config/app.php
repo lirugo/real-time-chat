@@ -161,6 +161,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Spatie\Fractal\FractalServiceProvider::class,
+        Laravel\Scout\ScoutServiceProvider::class
 
     ],
 
