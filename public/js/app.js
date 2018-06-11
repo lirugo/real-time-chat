@@ -25912,6 +25912,19 @@ module.exports = Vue;
                 resolve(response);
             });
         });
+    },
+    storeConversation: function storeConversation(_ref2) {
+        var body = _ref2.body,
+            recipientIds = _ref2.recipientIds;
+
+        return new Promise(function (resolve, reject) {
+            axios.post('/webapi/conversations', {
+                body: body,
+                recipients: recipientIds
+            }).then(function (response) {
+                resolve(response);
+            });
+        });
     }
 });
 
@@ -49551,6 +49564,9 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_autocomplete__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(2);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -49574,6 +49590,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -49585,7 +49604,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
-    methods: {
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])(['createConversation']), {
         addRecipient: function addRecipient(recipient) {
             var existing = this.recipients.find(function (r) {
                 return r.id === recipient.id;
@@ -49601,13 +49620,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.recipients = this.recipients.filter(function (r) {
                 return r.id !== recipient.id;
             });
+        },
+        send: function send() {
+            var _this = this;
+
+            this.createConversation({
+                recipientIds: this.recipients.map(function (r) {
+                    return r.id;
+                }),
+                body: this.body
+            }).then(function () {
+                _this.recipients = [];
+                _this.body = null;
+            });
         }
-    },
+    }),
     mounted: function mounted() {
-        var _this = this;
+        var _this2 = this;
 
         var users = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_autocomplete__["a" /* userautocomplete */])('#users').on('autocomplete:selected', function (e, selection) {
-            _this.addRecipient(selection);
+            _this2.addRecipient(selection);
             users.autocomplete.setVal('');
         });
     }
@@ -49625,66 +49657,82 @@ var render = function() {
     _c("div", { staticClass: "card-header" }, [_vm._v("New message")]),
     _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _vm.recipients.length
-        ? _c(
-            "ul",
-            { staticClass: "list-inline" },
-            [
-              _c("li", { staticClass: "list-inline-item" }, [_vm._v("To:")]),
-              _vm._v(" "),
-              _vm._l(_vm.recipients, function(recipient) {
-                return _c("li", { staticClass: "list-inline-item" }, [
-                  _vm._v(_vm._s(recipient.name) + " ["),
-                  _c(
-                    "a",
-                    {
-                      attrs: { href: "#" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.removeRecipient(recipient)
-                        }
-                      }
-                    },
-                    [_vm._v("x")]
-                  ),
-                  _vm._v("]")
-                ])
-              })
-            ],
-            2
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "message" } }, [_vm._v("Message")]),
-        _vm._v(" "),
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.body,
-              expression: "body"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { id: "message", cols: "30", rows: "4" },
-          domProps: { value: _vm.body },
+      _c(
+        "form",
+        {
+          attrs: { action: "" },
           on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.body = $event.target.value
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.send($event)
             }
           }
-        })
-      ]),
-      _vm._v(" "),
-      _vm._m(1)
+        },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm.recipients.length
+            ? _c(
+                "ul",
+                { staticClass: "list-inline" },
+                [
+                  _c("li", { staticClass: "list-inline-item" }, [
+                    _vm._v("To:")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.recipients, function(recipient) {
+                    return _c("li", { staticClass: "list-inline-item" }, [
+                      _vm._v(_vm._s(recipient.name) + " ["),
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.removeRecipient(recipient)
+                            }
+                          }
+                        },
+                        [_vm._v("x")]
+                      ),
+                      _vm._v("]")
+                    ])
+                  })
+                ],
+                2
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "message" } }, [_vm._v("Message")]),
+            _vm._v(" "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.body,
+                  expression: "body"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { id: "message", cols: "30", rows: "4" },
+              domProps: { value: _vm.body },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.body = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _vm._m(1)
+        ]
+      )
     ])
   ])
 }
@@ -49861,6 +49909,19 @@ var actions = {
         }).then(function (response) {
             commit('appendToConversation', response.data.data);
             commit('prependToConversation', response.data.data.parent.data);
+        });
+    },
+    createConversation: function createConversation(_ref4, _ref5) {
+        var dispatch = _ref4.dispatch,
+            commit = _ref4.commit;
+        var body = _ref5.body,
+            recipientIds = _ref5.recipientIds;
+
+        return __WEBPACK_IMPORTED_MODULE_0__api_all__["a" /* default */].storeConversation({
+            body: body,
+            recipientIds: recipientIds
+        }).then(function (response) {
+            console.log(response);
         });
     }
 };
