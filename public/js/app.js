@@ -25925,6 +25925,17 @@ module.exports = Vue;
                 resolve(response);
             });
         });
+    },
+    storeConversationUsers: function storeConversationUsers(id, _ref3) {
+        var recipientIds = _ref3.recipientIds;
+
+        return new Promise(function (resolve, reject) {
+            axios.post('/webapi/conversations/' + id + '/users', {
+                recipients: recipientIds
+            }).then(function (response) {
+                resolve(response);
+            });
+        });
     }
 });
 
@@ -25967,6 +25978,7 @@ Vue.component('conversations-dashboard', __webpack_require__(42));
 Vue.component('conversations', __webpack_require__(45));
 Vue.component('conversation', __webpack_require__(50));
 Vue.component('conversation-reply-form', __webpack_require__(53));
+Vue.component('conversation-add-user-form', __webpack_require__(125));
 Vue.component('conversation-form', __webpack_require__(56));
 
 
@@ -49185,6 +49197,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 
 
@@ -49232,6 +49246,8 @@ var render = function() {
                   2
                 )
               : _vm._e(),
+            _vm._v(" "),
+            _c("conversation-add-user-form"),
             _vm._v(" "),
             _c("hr"),
             _vm._v(" "),
@@ -49928,6 +49944,16 @@ var actions = {
             dispatch('getConversation', response.data.data.id);
             commit('prependToConversation', response.data.data);
         });
+    },
+    addConversationUsers: function addConversationUsers(_ref6, _ref7) {
+        var dispatch = _ref6.dispatch,
+            commit = _ref6.commit;
+        var id = _ref7.id,
+            recipientIds = _ref7.recipientIds;
+
+        return __WEBPACK_IMPORTED_MODULE_0__api_all__["a" /* default */].storeConversationUsers(id, {
+            recipientIds: recipientIds
+        }).then(function (response) {});
     }
 };
 
@@ -51339,10 +51365,10 @@ module.exports = function parseAlgoliaClientVersion(agent) {
 var index = __WEBPACK_IMPORTED_MODULE_0_algoliasearch___default()('O77TJZGGOT', '20f742e10ff20e35215e94b0c43af0e6');
 
 var userautocomplete = function userautocomplete(selector) {
-    index = index.initIndex('users');
+    var users = index.initIndex('users');
 
     return __WEBPACK_IMPORTED_MODULE_1_autocomplete_js___default()(selector, {}, {
-        source: __WEBPACK_IMPORTED_MODULE_1_autocomplete_js___default.a.sources.hits(index, { hitsPerPage: 10 }),
+        source: __WEBPACK_IMPORTED_MODULE_1_autocomplete_js___default.a.sources.hits(users, { hitsPerPage: 10 }),
         displayKey: 'name',
         template: {
             suggestion: function suggestion(_suggestion) {
@@ -60370,6 +60396,134 @@ module.exports = function popularIn(index, params, details, options) {
   }
 };
 
+
+/***/ }),
+/* 125 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(126)
+/* template */
+var __vue_template__ = __webpack_require__(127)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\forms\\ConversationAddUserForm.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-e729344e", Component.options)
+  } else {
+    hotAPI.reload("data-v-e729344e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 126 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_autocomplete__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(2);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    computed: Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])({
+        conversation: 'currentConversation'
+    }),
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])(['addConversationUsers'])),
+    mounted: function mounted() {
+        var _this = this;
+
+        var users = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_autocomplete__["a" /* userautocomplete */])('#users-add').on('autocomplete:selected', function (e, selection) {
+            _this.addConversationUsers({
+                id: _this.conversation.id,
+                recipientIds: [selection].map(function (recipient) {
+                    return recipient.id;
+                })
+            });
+
+            users.autocomplete.setVal('');
+        });
+    }
+});
+
+/***/ }),
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("form", { attrs: { action: "#" } }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            id: "users-add",
+            placeholder: "Start typing to find users"
+          }
+        })
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-e729344e", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
