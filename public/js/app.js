@@ -49868,6 +49868,14 @@ var mutations = {
             return c.id !== conversation.id;
         });
         state.conversations.unshift(conversation);
+    },
+    updateConversationInList: function updateConversationInList(state, conversation) {
+        state.conversations = state.conversations.map(function (c) {
+            if (c.id == conversation.id) {
+                return conversation;
+            }
+            return c;
+        });
     }
 };
 
@@ -49953,7 +49961,10 @@ var actions = {
 
         return __WEBPACK_IMPORTED_MODULE_0__api_all__["a" /* default */].storeConversationUsers(id, {
             recipientIds: recipientIds
-        }).then(function (response) {});
+        }).then(function (response) {
+            commit('updateUsersInConversation', response.data.data.users.data);
+            commit('updateConversationInList', response.data.data);
+        });
     }
 };
 
@@ -49968,6 +49979,9 @@ var mutations = {
     //Updating UI
     appendToConversation: function appendToConversation(state, reply) {
         state.conversation.replies.data.unshift(reply);
+    },
+    updateUsersInConversation: function updateUsersInConversation(state, users) {
+        state.conversation.users.data = users;
     }
 };
 

@@ -45,7 +45,8 @@ const actions = {
         return api.storeConversationUsers(id, {
             recipientIds: recipientIds
         }).then((response) => {
-
+            commit('updateUsersInConversation', response.data.data.users.data)
+            commit('updateConversationInList', response.data.data)
         })
     }
 };
@@ -60,6 +61,9 @@ const mutations = {
     //Updating UI
     appendToConversation(state, reply){
         state.conversation.replies.data.unshift(reply)
+    },
+    updateUsersInConversation(state, users){
+        state.conversation.users.data = users
     }
 };
 
