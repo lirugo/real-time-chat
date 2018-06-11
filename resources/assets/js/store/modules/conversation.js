@@ -37,7 +37,8 @@ const actions = {
             body:body,
             recipientIds:recipientIds
         }).then((response) => {
-            console.log(response)
+            dispatch('getConversation', response.data.data.id)
+            commit('prependToConversation', response.data.data)
         })
     }
 };

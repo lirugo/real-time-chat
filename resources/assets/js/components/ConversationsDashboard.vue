@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <conversation-form></conversation-form>
-                <conversations></conversations>
+                <conversations style="margin-top: 25px"></conversations>
             </div>
             <div class="col-md-7">
                 <conversation :id="id"></conversation>

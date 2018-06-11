@@ -48351,7 +48351,11 @@ var render = function() {
       _c(
         "div",
         { staticClass: "col-md-5" },
-        [_c("conversation-form"), _vm._v(" "), _c("conversations")],
+        [
+          _c("conversation-form"),
+          _vm._v(" "),
+          _c("conversations", { staticStyle: { "margin-top": "25px" } })
+        ],
         1
       ),
       _vm._v(" "),
@@ -49921,7 +49925,8 @@ var actions = {
             body: body,
             recipientIds: recipientIds
         }).then(function (response) {
-            console.log(response);
+            dispatch('getConversation', response.data.data.id);
+            commit('prependToConversation', response.data.data);
         });
     }
 };
