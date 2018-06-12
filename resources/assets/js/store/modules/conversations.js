@@ -33,6 +33,9 @@ const actions = {
                 .listen('ConversationReplyCreated', (e) => {
                     commit('prependToConversation', e.data.parent.data)
                 })
+                .listen('ConversationUsersCreated', (e) => {
+                    commit('updateConversationInList', e.data)
+                })
         })
         // set conversations
     }

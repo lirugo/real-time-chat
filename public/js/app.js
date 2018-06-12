@@ -65524,6 +65524,8 @@ var actions = {
                 commit('prependToConversation', e.data);
             }).listen('ConversationReplyCreated', function (e) {
                 commit('prependToConversation', e.data.parent.data);
+            }).listen('ConversationUsersCreated', function (e) {
+                commit('updateConversationInList', e.data);
             });
         });
         // set conversations
@@ -65604,6 +65606,8 @@ var actions = {
 
             Echo.private('conversation.' + id).listen('ConversationReplyCreated', function (e) {
                 commit('appendToConversation', e.data);
+            }).listen('ConversationUsersCreated', function (e) {
+                commit('updateUsersInConversation', e.data.users.data);
             });
 
             window.history.pushState(null, null, '/conversations/' + id);

@@ -29,6 +29,9 @@ const actions = {
             Echo.private('conversation.' + id)
                 .listen('ConversationReplyCreated', (e) => {
                     commit('appendToConversation', e.data)
+                })
+                .listen('ConversationUsersCreated', (e) => {
+                    commit('updateUsersInConversation', e.data.users.data)
                 });
 
             window.history.pushState(null, null, '/conversations/' + id)

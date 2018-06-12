@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Conversation;
+use App\Events\ConversationUsersCreated;
 use App\Http\Requests\StoreConversationUserRequest;
 use App\Transformers\ConversationTransformer;
 use Illuminate\Http\Request;
@@ -19,6 +20,8 @@ class ConversationUserController extends Controller
 
         //refresh users
         $conversation->load(['users']);
+
+        broadcast(new ConversationUsersCreated($conversation))->toOthers();
 
         //return conversation
         return fractal()
