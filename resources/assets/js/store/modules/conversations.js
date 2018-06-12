@@ -19,6 +19,7 @@ const actions = {
     getConversations ({dispatch, commit}, page){
         // set loading status true
         commit('setConversationsLoading', true)
+
         // api request
         api.getConversations(1).then((response) => {
             commit('setConversations', response.data.data)
@@ -28,6 +29,9 @@ const actions = {
             Echo.private('user.' + Laravel.user.id)
                 .listen('ConversationCreated', (e) => {
                     commit('prependToConversation', e.data)
+                })
+                .listen('ConversationReplyCreated', (e) => {
+                    commit('prependToConversation', e.data.parent.data)
                 })
         })
         // set conversations

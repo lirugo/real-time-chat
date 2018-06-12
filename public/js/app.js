@@ -65513,6 +65513,7 @@ var actions = {
 
         // set loading status true
         commit('setConversationsLoading', true);
+
         // api request
         __WEBPACK_IMPORTED_MODULE_0__api_all__["a" /* default */].getConversations(1).then(function (response) {
             commit('setConversations', response.data.data);
@@ -65521,6 +65522,8 @@ var actions = {
 
             Echo.private('user.' + Laravel.user.id).listen('ConversationCreated', function (e) {
                 commit('prependToConversation', e.data);
+            }).listen('ConversationReplyCreated', function (e) {
+                commit('prependToConversation', e.data.parent.data);
             });
         });
         // set conversations
@@ -65590,9 +65593,18 @@ var actions = {
             commit = _ref.commit;
 
         commit('setConversationLoading', true);
+
+        if (state.conversation) {
+            Echo.leave('conversation.' + state.conversation.id);
+        }
+
         __WEBPACK_IMPORTED_MODULE_0__api_all__["a" /* default */].getConversation(id).then(function (response) {
             commit('setConversation', response.data.data);
             commit('setConversationLoading', false);
+
+            Echo.private('conversation.' + id).listen('ConversationReplyCreated', function (e) {
+                commit('appendToConversation', e.data);
+            });
 
             window.history.pushState(null, null, '/conversations/' + id);
         });
