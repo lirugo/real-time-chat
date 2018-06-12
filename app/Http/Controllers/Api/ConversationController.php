@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Conversation;
+use App\Events\ConversationCreated;
 use App\Http\Requests\StoreConversationRequest;
 use App\Transformers\ConversationTransformer;
 use Illuminate\Http\Request;
@@ -56,10 +57,13 @@ class ConversationController extends Controller
             )
         ));
 
+        $conversation->load('users');
+        broadcast(new ConversationCreated($conversation))->toOthers();
+
         return fractal()
             ->item($conversation)
             ->parseIncludes(['user', 'users', 'replies', 'replies.user'])
-            ->transformWith(new ConversationTransformer())
+            ->transformWith(new ConversationTransformer)
             ->toArray();
     }
 }

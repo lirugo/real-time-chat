@@ -11,7 +11,9 @@
 |
 */
 
-Broadcast::channel('user.*', function ($user, $id) {
+use App\Conversation;
+
+Broadcast::channel('user.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 

@@ -13,6 +13,15 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    <!-- Scripts -->
+    <script>
+        window.Laravel = <?php echo json_encode([
+            'user' => [
+                'id' => Auth::check() ? Auth::user()->id : null
+            ]
+        ]); ?>
+    </script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">

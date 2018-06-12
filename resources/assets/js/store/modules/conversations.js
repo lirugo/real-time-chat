@@ -24,6 +24,11 @@ const actions = {
             commit('setConversations', response.data.data)
             // set loading status false
             commit('setConversationsLoading', false)
+
+            Echo.private('user.' + Laravel.user.id)
+                .listen('ConversationCreated', (e) => {
+                    commit('prependToConversation', e.data)
+                })
         })
         // set conversations
     }
