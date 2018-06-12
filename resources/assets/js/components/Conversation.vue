@@ -3,12 +3,16 @@
         <div class="loader"></div>
     </div>
     <div v-else-if="conversation">
-        <ul class="list-inline" v-if="conversation.users.data.length">
-            <li class="list-inline-item"><strong>In conversation:</strong></li>
-            <li class="list-inline-item" v-for="user in conversation.users.data">{{ user.name }}</li>
-        </ul>
+        <div class="card">
+            <div class="card-body">
+                <ul class="list-inline" v-if="conversation.users.data.length">
+                    <li><strong>In conversation:</strong></li>
+                    <li class="list-inline-item user-in" v-for="user in conversation.users.data">{{ user.name }}</li>
+                </ul>
 
-        <conversation-add-user-form></conversation-add-user-form>
+                <conversation-add-user-form></conversation-add-user-form>
+            </div>
+        </div>
         <hr>
 
         <conversation-reply-form></conversation-reply-form>
@@ -68,3 +72,13 @@
         }
     }
 </script>
+
+
+<style>
+    .user-in{
+        border-radius: 2px 2px;
+        border: 1px #ccc solid;
+        padding: 5px 8px 5px 8px;
+        margin-top:10px;
+    }
+</style>

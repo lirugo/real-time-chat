@@ -8,7 +8,12 @@
                 </div>
                 <ul v-if="recipients.length" class="list-inline">
                     <li class="list-inline-item">To:</li>
-                    <li class="list-inline-item" v-for="recipient in recipients">{{recipient.name}} [<a href="#" @click.prevent="removeRecipient(recipient)">x</a>]</li>
+                    <li class="list-inline-item user-add" v-for="recipient in recipients">
+                        {{recipient.name}}
+                        <a href="#" @click.prevent="removeRecipient(recipient)">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                    </li>
 
                 </ul>
                 <div class="form-group">
@@ -75,3 +80,11 @@
         }
     }
 </script>
+
+<style>
+    .user-add{
+        border-radius: 2px 2px;
+        border: 1px #ccc solid;
+        padding: 5px 8px 5px 8px;
+    }
+</style>

@@ -1,7 +1,7 @@
 <template>
    <form action="#">
        <div class="form-group">
-           <input type="text" id="users-add" placeholder="Start typing to find users" class="form-control">
+           <input type="text" id="users-add" placeholder="Start typing to find and add users" class="form-control">
        </div>
    </form>
 </template>

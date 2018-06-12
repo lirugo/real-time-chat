@@ -22,6 +22,7 @@
     "dependencies": {
         "algoliasearch": "^3.27.1",
         "autocomplete.js": "^0.30.0",
+        "font-awesome": "^4.7.0",
         "laravel-echo": "^1.4.0",
         "pluralize": "^7.0.0",
         "pusher-js": "^4.2.2",
